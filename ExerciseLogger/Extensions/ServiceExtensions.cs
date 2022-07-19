@@ -1,5 +1,7 @@
 ﻿using Contracts;
 using LoggerService;
+using Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace ExerciseLogger.Extensions
 {
@@ -26,5 +28,6 @@ namespace ExerciseLogger.Extensions
         //Logger service configuration, one instance created and called when needed
         public static void ConfigureLoggerService(this IServiceCollection services) =>
             services.AddSingleton<ILoggerManager, LoggerManager>();
+       
     }
 }

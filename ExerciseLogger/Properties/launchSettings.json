@@ -1,4 +1,4 @@
-﻿{
+{
   "$schema": "https://json.schemastore.org/launchsettings.json",
   "iisSettings": {
     "windowsAuthentication": false,
@@ -11,13 +11,14 @@
   "profiles": {
     "ExerciseLogger": {
       "commandName": "Project",
-      "dotnetRunMessages": true,
+      "workingDirectory": "D:\\Projects\\ExerciseLogger\\ExerciseLogger",
       "launchBrowser": true,
       "launchUrl": "weatherforecast",
-      "applicationUrl": "https://localhost:7065;http://localhost:5065",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "applicationUrl": "https://localhost:7065;http://localhost:5065",
+      "dotnetRunMessages": true
     },
     "IIS Express": {
       "commandName": "IISExpress",

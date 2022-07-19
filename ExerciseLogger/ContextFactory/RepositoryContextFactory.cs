@@ -1,12 +1,12 @@
-﻿using Repository;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Repository;
 
 namespace ExerciseLogger.ContextFactory
 {
-    public class RepositoryContextFactory : IDesignTimeDbContextFactory <RepositoryContext>
+    public class RepositoryContextFactory : IDesignTimeDbContextFactory<RepositoryContext>
     {
-        public RepositoryContext CreateDbContext(string[] arg)
+        public RepositoryContext CreateDbContext(string[] args)
         {
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -14,7 +14,8 @@ namespace ExerciseLogger.ContextFactory
                 .Build();
 
             var builder = new DbContextOptionsBuilder<RepositoryContext>()
-                .UseSqlServer(configuration.GetConnectionString("sqlConnection"));
+                .UseSqlServer(configuration.GetConnectionString("sqlConnection"),
+                 b => b.MigrationsAssembly("GymExercise"));
 
             return new RepositoryContext(builder.Options);
         }
