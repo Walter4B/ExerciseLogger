@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Repository;
+using LoggerService;
 
 namespace ExerciseLogger.ContextFactory
 {
