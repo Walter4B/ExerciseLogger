@@ -1,4 +1,7 @@
-﻿namespace ExerciseLogger.Extensions
+﻿using Contracts;
+using LoggerService;
+
+namespace ExerciseLogger.Extensions
 {
     public static class ServiceExtensions
     {
@@ -19,5 +22,9 @@
             {
 
             });
+
+        //Logger service configuration, one instance created and called when needed
+        public static void ConfigureLoggerService(this IServiceCollection services) =>
+            services.AddSingleton<ILoggerManager, LoggerManager>();
     }
 }
