@@ -16,7 +16,7 @@ namespace ExerciseLogger.ContextFactory
 
             var builder = new DbContextOptionsBuilder<RepositoryContext>()
                 .UseSqlServer(configuration.GetConnectionString("sqlConnection"),
-                 b => b.MigrationsAssembly("GymExercise"));
+                 b => b.MigrationsAssembly("ExerciseLogger"));
 
             return new RepositoryContext(builder.Options);
         }
