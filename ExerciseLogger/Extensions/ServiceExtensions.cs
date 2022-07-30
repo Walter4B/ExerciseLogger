@@ -20,13 +20,13 @@ namespace ExerciseLogger.Extensions
 
         //IIS configuration 
         public static void ConfigureIISIntegration(this IServiceCollection services) =>
-            services.Configure<IISOptions>(options =>
-            {
-
-            });
+            services.Configure<IISOptions>(options => {});
 
         //Logger service configuration, one instance created and called when needed
         public static void ConfigureLoggerService(this IServiceCollection services) =>
             services.AddSingleton<ILoggerManager, LoggerManager>();
+
+        public static void ConfigureRepositoryManager(this IServiceCollection services) =>
+            services.AddScoped<IRepositoryManager, RepositoryManager>();
     }
 }
