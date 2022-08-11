@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Service.Contracts;
 using Contracts;
+using Entities.Models;
 
 namespace Service
 {
@@ -17,6 +18,21 @@ namespace Service
         { 
             _repositoryManager = repository;
             _loggerManager = logger;
+        }
+
+        public IEnumerable<Gym> GetAllGyms(bool trackChanges)
+        {
+            try
+            {
+                var gyms = _repositoryManager.Gym.GetAllGyms(trackChanges);
+
+                return gyms;
+            }
+            catch (Exception ex)
+            {
+                _loggerManager.LogError($"Something went wrong in the {nameof(GetAllGyms)} service method {ex}");
+                throw;
+            }
         }
     }
 }

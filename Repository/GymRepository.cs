@@ -11,5 +11,10 @@ namespace Repository
     public class GymRepository : RepositoryBase<Gym>, IGymRepository
     {
         public GymRepository(RepositoryContext repositoryContext) : base(repositoryContext) { }
+
+        public IEnumerable<Gym> GetAllGyms(bool trackingChanges) =>
+            FindAll(trackingChanges)
+                .OrderBy(c => c.Id)
+                .ToList();
     }
 }
