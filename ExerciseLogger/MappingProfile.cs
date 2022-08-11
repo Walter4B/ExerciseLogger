@@ -7,8 +7,8 @@ namespace ExerciseLogger
     public class MappingProfile : Profile
     {
         public MappingProfile()
-        { 
-            CreateMap
+        {
+            CreateMap<Gym, GymDto>();
         }
     }
 }

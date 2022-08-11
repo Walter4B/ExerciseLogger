@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Service.Contracts;
 using Contracts;
+using AutoMapper;
 
 namespace Service
 {
@@ -13,10 +14,10 @@ namespace Service
         private readonly Lazy<IGymService> _gymService;
         private readonly Lazy<IExerciseService> _exerciseService;
 
-        public ServiceManager (IRepositoryManager repositoryManager, ILoggerManager loggerManager)
+        public ServiceManager (IRepositoryManager repositoryManager, ILoggerManager loggerManager, IMapper mapper)
         {
-            _gymService = new Lazy<IGymService>(() => new GymService(repositoryManager, loggerManager));
-            _exerciseService = new Lazy<IExerciseService>(() => new ExerciseService(repositoryManager, loggerManager));
+            _gymService = new Lazy<IGymService>(() => new GymService(repositoryManager, loggerManager, mapper));
+            _exerciseService = new Lazy<IExerciseService>(() => new ExerciseService(repositoryManager, loggerManager, mapper));
         }
 
         public IGymService GymService => _gymService.Value;

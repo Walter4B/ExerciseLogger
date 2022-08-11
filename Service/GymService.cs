@@ -7,6 +7,7 @@ using Service.Contracts;
 using Contracts;
 using Entities.Models;
 using Shared.DataTransferObjects;
+using AutoMapper;
 
 namespace Service
 {
@@ -14,11 +15,14 @@ namespace Service
     {
         private readonly IRepositoryManager _repositoryManager;
         private readonly ILoggerManager _loggerManager;
+        private readonly IMapper _mapper;
 
-        public GymService(IRepositoryManager repository, ILoggerManager logger)
+        public GymService(IRepositoryManager repository, ILoggerManager logger, IMapper mapper)
         { 
             _repositoryManager = repository;
             _loggerManager = logger;
+            _mapper = mapper;
+
         }
 
         public IEnumerable<GymDto> GetAllGyms(bool trackChanges)
@@ -27,9 +31,7 @@ namespace Service
             {
                 var gyms = _repositoryManager.Gym.GetAllGyms(trackChanges);
 
-                var gymDtos = gyms.Select(g => 
-                            new GymDto(g.Id, g.Name ?? "", g.Address ?? ""))
-                            .ToList();
+                var gymDtos = _mapper.Map<IEnumerable<GymDto>>(gyms);
 
                 return gymDtos;
             }
