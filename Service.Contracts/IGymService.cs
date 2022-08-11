@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Entities.Models;
+using Shared.DataTransferObjects;
+
 namespace Service.Contracts
 {
     public interface IGymService
     {
-        IEnumerable<Gym> GetAllGyms(bool trackChanges);
+        IEnumerable<GymDto> GetAllGyms(bool trackChanges);
     }
 }

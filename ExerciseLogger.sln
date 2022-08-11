@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service", "Service\Service.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExerciseLogger.Presentation", "ExerciseLogger.Presentation\ExerciseLogger.Presentation.csproj", "{862E6994-547C-4605-BD54-E2B7AF4D1359}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{868E4BEC-B6BA-4433-A4F6-B998266E4575}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{862E6994-547C-4605-BD54-E2B7AF4D1359}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{862E6994-547C-4605-BD54-E2B7AF4D1359}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{862E6994-547C-4605-BD54-E2B7AF4D1359}.Release|Any CPU.Build.0 = Release|Any CPU
+		{868E4BEC-B6BA-4433-A4F6-B998266E4575}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{868E4BEC-B6BA-4433-A4F6-B998266E4575}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{868E4BEC-B6BA-4433-A4F6-B998266E4575}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{868E4BEC-B6BA-4433-A4F6-B998266E4575}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

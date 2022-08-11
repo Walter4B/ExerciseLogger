@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Service.Contracts;
 using Contracts;
 using Entities.Models;
+using Shared.DataTransferObjects;
 
 namespace Service
 {
@@ -20,13 +21,17 @@ namespace Service
             _loggerManager = logger;
         }
 
-        public IEnumerable<Gym> GetAllGyms(bool trackChanges)
+        public IEnumerable<GymDto> GetAllGyms(bool trackChanges)
         {
             try
             {
                 var gyms = _repositoryManager.Gym.GetAllGyms(trackChanges);
 
-                return gyms;
+                var gymDtos = gyms.Select(g => 
+                            new GymDto(g.Id, g.Name ?? "", g.Address ?? ""))
+                            .ToList();
+
+                return gymDtos;
             }
             catch (Exception ex)
             {
