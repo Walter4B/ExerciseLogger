@@ -10,7 +10,7 @@ namespace ExerciseLogger.Presentation.Controllers
 {
     [Route("api/gyms")]
     [ApiController]
-    internal class GymsController : ControllerBase
+    public class GymsController : ControllerBase
     {
         private readonly IServiceManager _service;
 

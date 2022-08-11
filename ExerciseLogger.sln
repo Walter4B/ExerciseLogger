@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service.Contracts", "Servic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service", "Service\Service.csproj", "{E4D5081E-6665-4617-BC9E-1437402751AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExerciseLogger.Presentation", "ExerciseLogger.Presentation\ExerciseLogger.Presentation.csproj", "{862E6994-547C-4605-BD54-E2B7AF4D1359}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExerciseLogger.Presentation", "ExerciseLogger.Presentation\ExerciseLogger.Presentation.csproj", "{862E6994-547C-4605-BD54-E2B7AF4D1359}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
