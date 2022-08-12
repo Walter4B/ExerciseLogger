@@ -19,15 +19,9 @@ namespace ExerciseLogger.Presentation.Controllers
         [HttpGet]
         public IActionResult GetGyms()
         {
-            try
-            {
-                var gyms = _service.GymService.GetAllGyms(trackChanges: false);
-                return Ok(gyms);
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, "Internal server error");
-            }
+            var gyms = _service.GymService.GetAllGyms(trackChanges: false);
+
+            return Ok(gyms);
         }
     }
 }

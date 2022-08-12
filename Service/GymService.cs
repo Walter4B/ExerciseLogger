@@ -27,19 +27,13 @@ namespace Service
 
         public IEnumerable<GymDto> GetAllGyms(bool trackChanges)
         {
-            try
-            {
-                var gyms = _repositoryManager.Gym.GetAllGyms(trackChanges);
 
-                var gymDtos = _mapper.Map<IEnumerable<GymDto>>(gyms);
+            var gyms = _repositoryManager.Gym.GetAllGyms(trackChanges);
 
-                return gymDtos;
-            }
-            catch (Exception ex)
-            {
-                _loggerManager.LogError($"Something went wrong in the {nameof(GetAllGyms)} service method {ex}");
-                throw;
-            }
+            var gymDtos = _mapper.Map<IEnumerable<GymDto>>(gyms);
+
+            return gymDtos;
+
         }
     }
 }
