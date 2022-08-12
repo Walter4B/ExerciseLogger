@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Service.Contracts;
 using Contracts;
 using AutoMapper;
+using Shared.DataTransferObjects;
+using Entities.Exceptions;
 
 namespace Service
 {
@@ -20,6 +22,20 @@ namespace Service
             _repositoryManager = repository;
             _loggerManager = logger;
             _mapper = mapper;
+        }
+
+        public IEnumerable<ExerciseDto> GetExercises(Guid gymId, bool trackChanges)
+        {
+            var gym = _repositoryManager.Gym.GetGym(gymId, trackChanges);
+            if (gym is null)
+                throw new GymNotFoundException(gymId);
+
+            var exercisesFromDb = _repositoryManager.Exercise.GetExercises(gymId, trackChanges);
+
+            var exercisesDto = _mapper.Map<IEnumerable<ExerciseDto>>(exercisesFromDb);
+
+            return exercisesDto;
+
         }
     }
 }

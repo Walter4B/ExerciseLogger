@@ -9,6 +9,8 @@ namespace ExerciseLogger
         public MappingProfile()
         {
             CreateMap<Gym, GymDto>();
+
+            CreateMap<Exercise, ExerciseDto>();
         }
     }
 }

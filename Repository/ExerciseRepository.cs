@@ -11,5 +11,9 @@ namespace Repository
     public class ExerciseRepository : RepositoryBase<Exercise>, IExerciseRepository
     {
         public ExerciseRepository(RepositoryContext repositoryContext) : base(repositoryContext) { }
+
+        public IEnumerable<Exercise> GetExercises(Guid gymId, bool trackChanges) =>
+            FindByCondition(e => e.GymId.Equals(gymId), trackChanges)
+            .OrderBy(e => e.StartTime).ToList();
     }
 }

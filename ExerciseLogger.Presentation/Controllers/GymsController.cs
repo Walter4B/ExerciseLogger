@@ -27,7 +27,7 @@ namespace ExerciseLogger.Presentation.Controllers
         [HttpGet("{Id:Guid}")]
         public IActionResult GetGym(Guid id)
         {
-            var gym = _service.GymService.GetGym(id, trackingChanges: false);
+            var gym = _service.GymService.GetGym(id, trackChanges: false);
 
             return Ok(gym);
         }
