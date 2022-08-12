@@ -10,5 +10,6 @@ namespace Service.Contracts
     public interface IGymService
     {
         IEnumerable<GymDto> GetAllGyms(bool trackChanges);
+        GymDto GetGym(Guid gymId, bool trackingChanges);
     }
 }

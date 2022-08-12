@@ -8,6 +8,7 @@ using Contracts;
 using Entities.Models;
 using Shared.DataTransferObjects;
 using AutoMapper;
+using Entities.Exceptions;
 
 namespace Service
 {
@@ -34,6 +35,17 @@ namespace Service
 
             return gymDtos;
 
+        }
+
+        public GymDto GetGym(Guid id, bool trackingChanges)
+        {
+            var gym = _repositoryManager.Gym.GetGym(id, trackingChanges);
+            if (gym is null)
+                throw new GymNotFoundException(id);
+
+            var gymDto = _mapper.Map<GymDto>(gym);
+
+            return gymDto;
         }
     }
 }

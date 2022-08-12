@@ -16,5 +16,9 @@ namespace Repository
             FindAll(trackingChanges)
                 .OrderBy(c => c.Id)
                 .ToList();
+
+        public Gym GetGym(Guid gymId, bool trackingChanges) =>
+            FindByCondition(g => g.Id.Equals(gymId), trackingChanges)
+            .SingleOrDefault();
     }
 }

@@ -10,5 +10,6 @@ namespace Contracts
     public interface IGymRepository
     {
         IEnumerable<Gym> GetAllGyms(bool trackingChanges);
+        Gym GetGym(Guid gymId, bool trackingChanges);
     }
 }
