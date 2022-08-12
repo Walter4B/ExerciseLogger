@@ -10,5 +10,6 @@ namespace Contracts
     public interface IExerciseRepository
     {
         IEnumerable<Exercise> GetExercises(Guid gymId, bool trackChanges);
+        Exercise GetExercise(Guid gymId, Guid id, bool trackChanges);
     }
 }

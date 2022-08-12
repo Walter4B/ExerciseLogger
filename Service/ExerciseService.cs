@@ -37,5 +37,19 @@ namespace Service
             return exercisesDto;
 
         }
+
+        public ExerciseDto GetExercise(Guid gymId, Guid id, bool trackChanges)
+        {
+            var gym = _repositoryManager.Gym.GetGym(gymId, trackChanges);
+            if (gym is null)
+                throw new GymNotFoundException(gymId);
+
+            var exerciseDb = _repositoryManager.Exercise.GetExercise(gymId, id, trackChanges);
+            if (exerciseDb is null)
+                throw new ExerciseNotFoundException(id);
+
+            var exercise = _mapper.Map<ExerciseDto>(exerciseDb);
+            return exercise;
+        }
     }
 }

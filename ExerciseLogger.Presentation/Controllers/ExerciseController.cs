@@ -23,5 +23,12 @@ namespace ExerciseLogger.Presentation.Controllers
 
             return Ok(exercises);
         }
+
+        [HttpGet("{id:guid}")]
+        public IActionResult GetExercise(Guid gymId, Guid exerciseId)
+        { 
+            var exercise = _service.ExerciseService.GetExercise(gymId, exerciseId, trackChanges: false);
+            return Ok(exercise);
+        }
     }
 }

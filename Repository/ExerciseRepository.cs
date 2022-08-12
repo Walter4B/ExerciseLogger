@@ -15,5 +15,9 @@ namespace Repository
         public IEnumerable<Exercise> GetExercises(Guid gymId, bool trackChanges) =>
             FindByCondition(e => e.GymId.Equals(gymId), trackChanges)
             .OrderBy(e => e.StartTime).ToList();
+
+        public Exercise GetExercise(Guid gymId, Guid id, bool trackChanges) =>
+            FindByCondition(e => e.GymId.Equals(gymId) && e.Id.Equals(id), trackChanges)
+            .SingleOrDefault();
     }
 }

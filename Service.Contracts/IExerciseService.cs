@@ -10,5 +10,6 @@ namespace Service.Contracts
     public interface IExerciseService
     {
         IEnumerable<ExerciseDto> GetExercises(Guid gymid, bool trackChanges);
+        ExerciseDto GetExercise(Guid gymId, Guid id, bool trackChanges);
     }
 }
