@@ -17,18 +17,19 @@ namespace ExerciseLogger.Presentation.Controllers
         public ExerciseController (IServiceManager service) => _service = service;
 
         [HttpGet]
-        public IActionResult GetExercisesFromGym(Guid gymId)
+        public IActionResult GetExercisesForGym(Guid gymId)
         {
-            var exercises = _service.ExerciseService.GetExercises(gymId, trackChanges: false);
+            var exercise = _service.ExerciseService.GetExercises(gymId, trackChanges: false);
+            return Ok(exercise);
 
-            return Ok(exercises);
         }
 
         [HttpGet("{id:guid}")]
-        public IActionResult GetExercise(Guid gymId, Guid exerciseId)
-        { 
-            var exercise = _service.ExerciseService.GetExercise(gymId, exerciseId, trackChanges: false);
-            return Ok(exercise);
+        public IActionResult GetExerciseForGym(Guid gymId, Guid id)
+        {
+            var exercises = _service.ExerciseService.GetExercise(gymId, id, trackChanges: false);
+
+            return Ok(exercises);
         }
     }
 }
