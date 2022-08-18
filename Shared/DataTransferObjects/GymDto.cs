@@ -6,5 +6,11 @@ using System.Threading.Tasks;
 
 namespace Shared.DataTransferObjects
 {
-    public record GymDto (Guid Id, string Name, string Address);
+    [Serializable]
+    public record GymDto
+    {
+        public Guid Id { get; init; }
+        public string Name { get; init; }
+        public string Address {get; init;}
+    }
 }

@@ -15,7 +15,11 @@ builder.Services.ConfigureServiceManager();
 builder.Services.ConfigureSqlContext(builder.Configuration);
 builder.Services.AddAutoMapper(typeof(Program));
 
-builder.Services.AddControllers()
+builder.Services.AddControllers(config => {
+    config.RespectBrowserAcceptHeader = true;
+    config.ReturnHttpNotAcceptable = true;
+}).AddXmlDataContractSerializerFormatters()
+       .AddCutomCSVFormatter()
        .AddApplicationPart(typeof(ExerciseLogger.Presentation.AssemblyReference).Assembly);
 
 var app = builder.Build();
@@ -24,7 +28,9 @@ var logger = app.Services.GetRequiredService<ILoggerManager>();
 app.ConfigureExceptionHandler(logger);
 
 if (app.Environment.IsProduction())
+{
     app.UseHsts();
+}
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
