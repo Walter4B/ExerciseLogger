@@ -20,5 +20,7 @@ namespace Repository
         public Gym GetGym(Guid gymId, bool trackingChanges) =>
             FindByCondition(g => g.Id.Equals(gymId), trackingChanges)
             .SingleOrDefault();
+
+        public void CreateGym(Gym gym) => Create(gym);
     }
 }

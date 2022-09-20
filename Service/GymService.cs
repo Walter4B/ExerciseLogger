@@ -47,5 +47,17 @@ namespace Service
 
             return gymDto;
         }
+
+        public GymDto CreateGym(GymForCreationDto gym)
+        { 
+            var gymEntity = _mapper.Map<Gym> (gym);
+
+            _repositoryManager.Gym.CreateGym(gymEntity);
+            _repositoryManager.Save();
+
+            var gymToReturn = _mapper.Map<GymDto>(gymEntity);
+
+            return gymToReturn;
+        }
     }
 }

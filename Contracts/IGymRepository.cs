@@ -11,5 +11,6 @@ namespace Contracts
     {
         IEnumerable<Gym> GetAllGyms(bool trackChanges);
         Gym GetGym(Guid gymId, bool trackChanges);
+        void CreateGym(Gym gym);
     }
 }

@@ -8,6 +8,7 @@ using Contracts;
 using AutoMapper;
 using Shared.DataTransferObjects;
 using Entities.Exceptions;
+using Entities.Models;
 
 namespace Service
 {
@@ -50,6 +51,25 @@ namespace Service
 
             var exercise = _mapper.Map<ExerciseDto>(exerciseDb);
             return exercise;
+        }
+
+        public ExerciseDto CreateExerciseForGym(Guid gymId, ExerciseForCreationDto exerciseForCreation, bool trackingChanges)
+        {
+            var gym = _repository.Gym.GetGym(gymId, trackingChanges);
+
+            if (gym is null)
+            {
+                throw new GymNotFoundException(gymId);
+            }
+
+            var exerciseEntity = _mapper.Map<Exercise>(exerciseForCreation);
+
+            _repository.Exercise.CreateExerciseForGym(gymId, exerciseEntity);
+            _repository.Save();
+
+            var exerciseToReturn = _mapper.Map<ExerciseDto>(exerciseEntity);
+
+            return exerciseToReturn;
         }
     }
 }

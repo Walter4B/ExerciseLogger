@@ -11,6 +11,10 @@ namespace ExerciseLogger
             CreateMap<Gym, GymDto>();
 
             CreateMap<Exercise, ExerciseDto>();
+
+            CreateMap<GymForCreationDto, Gym>();
+
+            CreateMap<ExerciseForCreationDto, Exercise>();
         }
     }
 }

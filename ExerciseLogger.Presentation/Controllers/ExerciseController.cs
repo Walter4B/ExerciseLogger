@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
+using Shared.DataTransferObjects;
 
 namespace ExerciseLogger.Presentation.Controllers
 {
@@ -24,12 +25,25 @@ namespace ExerciseLogger.Presentation.Controllers
 
         }
 
-        [HttpGet("{id:guid}")]
+        [HttpGet("{id:guid}", Name = "GetExerciseForGym")]
         public IActionResult GetExerciseForGym(Guid gymId, Guid id)
         {
             var exercises = _service.ExerciseService.GetExercise(gymId, id, trackChanges: false);
 
             return Ok(exercises);
+        }
+
+        [HttpPost]
+        public IActionResult CreateExerciseForGym(Guid gymId, [FromBody] ExerciseForCreationDto exercise)
+        {
+            if (exercise is null)
+            {
+                return BadRequest("ExerciseForCreationDto object is null");
+            }
+
+            var exerciseToReturn = _service.ExerciseService.CreateExerciseForGym(gymId, exercise, trackingChanges: false);
+
+            return CreatedAtRoute("GetExerciseForGym", new { gymId, id = exerciseToReturn.Id }, exerciseToReturn);
         }
     }
 }

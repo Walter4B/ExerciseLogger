@@ -20,5 +20,11 @@ namespace Repository
         public Exercise GetExercise(Guid gymId, Guid id, bool trackChanges) =>
             FindByCondition(e => e.GymId.Equals(gymId) && e.Id.Equals(id), trackChanges)
             .SingleOrDefault();
+
+        public void CreateExerciseForGym(Guid gymId, Exercise exercise)
+        { 
+            exercise.GymId = gymId;
+            Create(exercise);
+        }
     }
 }
