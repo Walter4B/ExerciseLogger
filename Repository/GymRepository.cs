@@ -22,5 +22,9 @@ namespace Repository
             .SingleOrDefault();
 
         public void CreateGym(Gym gym) => Create(gym);
+
+        public IEnumerable<Gym> GetByIds(IEnumerable<Guid> ids, bool trackChanges) =>
+            FindByCondition(x => ids.Contains(x.Id), trackChanges)
+            .ToList();
     }
 }

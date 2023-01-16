@@ -59,5 +59,45 @@ namespace Service
 
             return gymToReturn;
         }
+
+        public IEnumerable<GymDto> GetByIds(IEnumerable<Guid> ids, bool trackChanges)
+        {
+            if (ids is null)
+            {
+                throw new IdParametersBadRequestException();
+            }
+
+            var gymEntities = _repositoryManager.Gym.GetByIds(ids, trackChanges);
+            if (ids.Count() != gymEntities.Count())
+            {
+                throw new CollectionByIdsBadRequestException();
+            }
+
+            var gymsToReturn = _mapper.Map<IEnumerable<GymDto>>(gymEntities);
+
+            return gymsToReturn;
+        }
+
+        public (IEnumerable<GymDto> gyms, string ids) CreateGymCollection(IEnumerable<GymForCreationDto> gymCollection)
+        {
+            if (gymCollection is null)
+            {
+                throw new GymCollectionBadRequest();
+            }
+
+            var gymEntities = _mapper.Map<IEnumerable<Gym>>(gymCollection);
+
+            foreach (var gym in gymEntities)
+            {
+                _repositoryManager.Gym.CreateGym(gym);
+            }
+
+            _repositoryManager.Save();
+
+            var gymCollectionToReturn = _mapper.Map<IEnumerable<GymDto>>(gymEntities);
+            var ids = string.Join(",", gymCollectionToReturn.Select(g => g.Id));
+
+            return (gyms: gymCollectionToReturn, ids: ids);
+        }
     }
 }
