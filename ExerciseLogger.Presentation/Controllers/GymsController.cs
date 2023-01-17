@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ExerciseLogger.Presentation.ModelBinders;
 using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using Shared.DataTransferObjects;
@@ -34,7 +35,7 @@ namespace ExerciseLogger.Presentation.Controllers
         }
 
         [HttpGet("collection/({ids})", Name = "GymCollection")]
-        public IActionResult GetGymCollection(IEnumerable<Guid> ids)
+        public IActionResult GetGymCollection([ModelBinder (BinderType = typeof(ArrayModelBinder))]IEnumerable<Guid> ids)
         {
             var gyms = _service.GymService.GetByIds(ids, trackChanges: false);
 
