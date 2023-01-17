@@ -26,5 +26,8 @@ namespace Repository
             exercise.GymId = gymId;
             Create(exercise);
         }
+
+        public void DeleteExercise(Exercise exercise) => Delete(exercise);
+        
     }
 }

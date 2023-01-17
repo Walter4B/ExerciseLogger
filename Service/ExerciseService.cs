@@ -71,5 +71,25 @@ namespace Service
 
             return exerciseToReturn;
         }
+
+        public void DeleteExerciseForGym(Guid gymId, Guid id, bool trackChanges) 
+        {
+            var gym = _repository.Gym.GetGym(gymId, trackChanges);
+
+            if(gym is null)
+            {
+                throw new GymNotFoundException(gymId);
+            }
+
+            var exerciseForGym = _repository.Exercise.GetExercise(gymId, id, trackChanges);
+
+            if (exerciseForGym is null)
+            {
+                throw new ExerciseNotFoundException(id);
+            }
+
+            _repository.Exercise.DeleteExercise(exerciseForGym);
+            _repository.Save();
+        }
     }
 }
