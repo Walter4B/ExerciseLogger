@@ -26,5 +26,7 @@ namespace Repository
         public IEnumerable<Gym> GetByIds(IEnumerable<Guid> ids, bool trackChanges) =>
             FindByCondition(x => ids.Contains(x.Id), trackChanges)
             .ToList();
+
+        public void DeleteGym(Gym gym) => Delete(gym);
     }
 }

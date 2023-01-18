@@ -63,5 +63,12 @@ namespace ExerciseLogger.Presentation.Controllers
             return CreatedAtRoute("GymCollection", new { result.ids }, result.gyms);
         }
 
+        [HttpDelete("{id:guid}")]
+        public IActionResult DeleteGym(Guid id)
+        {
+            _service.GymService.DeleteGym(id, trackChanges: false);
+
+            return NoContent();
+        }
     }
 }

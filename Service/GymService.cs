@@ -99,5 +99,17 @@ namespace Service
 
             return (gyms: gymCollectionToReturn, ids: ids);
         }
+
+        public void DeleteGym(Guid gymId, bool trackChanges) 
+        {
+            var gym = _repositoryManager.Gym.GetGym(gymId, trackChanges);
+            if(gym is null)
+            {
+                throw new GymNotFoundException(gymId);
+            }
+
+            _repositoryManager.Gym.DeleteGym(gym);
+            _repositoryManager.Save();
+        }
     }
 }

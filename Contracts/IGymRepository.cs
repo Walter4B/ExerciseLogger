@@ -13,5 +13,6 @@ namespace Contracts
         Gym GetGym(Guid gymId, bool trackChanges);
         void CreateGym(Gym gym);
         IEnumerable<Gym> GetByIds(IEnumerable<Guid> ids, bool trackChanges);
+        void DeleteGym(Gym gym);
     }
 }
