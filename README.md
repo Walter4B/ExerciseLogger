@@ -33,6 +33,8 @@ Application is meant to keep track of training sessions with notes about the ses
 - SqlServer
 - NLog
 - Postman
+- Newtonsoft.Json
+- JsonPatch
 - .net 6.0
 
 ## Tech stack UI:
