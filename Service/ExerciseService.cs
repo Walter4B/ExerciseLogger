@@ -110,5 +110,30 @@ namespace Service
             _repository.Save();
 
         }
+
+        public (ExerciseForUpdateDto exerciseToPatch, Exercise exerciseEntity) GetExerciseForPatch(Guid gymId, Guid id, bool gymTrackChanges, bool exerTrachChanges)
+        {
+            var gym = _repository.Gym.GetGym(gymId, gymTrackChanges);
+            if(gym is null)
+            {
+                throw new GymNotFoundException(gymId);
+            }
+
+            var exerciseEntity = _repository.Exercise.GetExercise(gymId, id, exerTrachChanges);
+            if(exerciseEntity is null)
+            {
+                throw new ExerciseNotFoundException(id);
+            }
+
+            var exerciseToPatch = _mapper.Map<ExerciseForUpdateDto>(exerciseEntity);
+
+            return (exerciseToPatch, exerciseEntity);
+        }
+
+        public void SaveChangesForPatch(ExerciseForUpdateDto exerciseToPatch, Exercise exerciseEntity)
+        {
+            _mapper.Map(exerciseToPatch, exerciseEntity);
+            _repository.Save();
+        }
     }
 }

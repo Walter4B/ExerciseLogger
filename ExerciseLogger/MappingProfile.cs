@@ -16,7 +16,7 @@ namespace ExerciseLogger
 
             CreateMap<ExerciseForCreationDto, Exercise>();
 
-            CreateMap<ExerciseForUpdateDto, Exercise>();
+            CreateMap<ExerciseForUpdateDto, Exercise>().ReverseMap();
 
             CreateMap<GymForUpdateDto, Gym>();
         }

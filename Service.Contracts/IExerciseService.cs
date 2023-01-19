@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Entities.Models;
 using Shared.DataTransferObjects;
 
 namespace Service.Contracts
@@ -14,5 +10,7 @@ namespace Service.Contracts
         ExerciseDto CreateExerciseForGym(Guid gymId, ExerciseForCreationDto exerciseForCreationDto, bool trackingChanges);
         void DeleteExerciseForGym(Guid gymId, Guid id, bool trackChanges);
         void UpdateExerciseForGym(Guid gymId, Guid id, ExerciseForUpdateDto exerciseForUpdate, bool gymTrackChanges, bool exerTrackChanges);
+        (ExerciseForUpdateDto exerciseToPatch, Exercise exerciseEntity) GetExerciseForPatch(Guid gymId, Guid id, bool gymTrackChanges, bool exerTrackChanges);
+        void SaveChangesForPatch(ExerciseForUpdateDto exerciseToPatch, Exercise exerciseEntity);
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using Shared.DataTransferObjects;
@@ -63,6 +64,23 @@ namespace ExerciseLogger.Presentation.Controllers
             }
 
             _service.ExerciseService.UpdateExerciseForGym(gymId, id, exercise, gymTrackChanges: false, exerTrackChanges: true);
+            return NoContent();
+        }
+
+        [HttpPatch("{id:guid}")]
+        public IActionResult PartiallyUpdateExerciseForGym(Guid gymId, Guid id, [FromBody] JsonPatchDocument<ExerciseForUpdateDto> patchDoc)
+        {
+            if (patchDoc is null)
+            {
+                return BadRequest("patchDoc object is null.");
+            }
+
+            var result = _service.ExerciseService.GetExerciseForPatch(gymId, id, gymTrackChanges: false, exerTrackChanges: true);
+
+            patchDoc.ApplyTo(result.exerciseToPatch);
+
+            _service.ExerciseService.SaveChangesForPatch(result.exerciseToPatch, result.exerciseEntity);
+
             return NoContent();
         }
     }
