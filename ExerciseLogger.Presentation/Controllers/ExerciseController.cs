@@ -53,5 +53,17 @@ namespace ExerciseLogger.Presentation.Controllers
 
             return NoContent();
         }
+
+        [HttpPut("{id:guid}")]
+        public IActionResult UpdateExerciseForGym(Guid gymId, Guid id, [FromBody] ExerciseForUpdateDto exercise)
+        { 
+            if(exercise is null)
+            {
+                return BadRequest("ExerciseForUpdateDto object is null");
+            }
+
+            _service.ExerciseService.UpdateExerciseForGym(gymId, id, exercise, gymTrackChanges: false, exerTrackChanges: true);
+            return NoContent();
+        }
     }
 }

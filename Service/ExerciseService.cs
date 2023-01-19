@@ -81,15 +81,34 @@ namespace Service
                 throw new GymNotFoundException(gymId);
             }
 
-            var exerciseForGym = _repository.Exercise.GetExercise(gymId, id, trackChanges);
+            var exerciseEntity = _repository.Exercise.GetExercise(gymId, id, trackChanges);
 
-            if (exerciseForGym is null)
+            if (exerciseEntity is null)
             {
                 throw new ExerciseNotFoundException(id);
             }
 
-            _repository.Exercise.DeleteExercise(exerciseForGym);
+            _repository.Exercise.DeleteExercise(exerciseEntity);
             _repository.Save();
+        }
+
+        public void UpdateExerciseForGym(Guid gymId, Guid id, ExerciseForUpdateDto exerciseForUpdate, bool gymTrackChanges, bool exerTrackChanges)
+        {
+            var gym = _repository.Gym.GetGym(gymId, gymTrackChanges);
+            if(gym is null) 
+            {
+                throw new GymNotFoundException(gymId);
+            }
+
+            var exerciseEntity = _repository.Exercise.GetExercise(gymId, id, exerTrackChanges);
+            if(exerciseEntity is null)
+            {
+                throw new ExerciseNotFoundException(id);
+            }
+
+            _mapper.Map(exerciseForUpdate, exerciseEntity);
+            _repository.Save();
+
         }
     }
 }
