@@ -111,5 +111,18 @@ namespace Service
             _repositoryManager.Gym.DeleteGym(gym);
             _repositoryManager.Save();
         }
+
+        public void UpdateGym(Guid gymId, GymForUpdateDto gymForUpdate, bool trackChanges)
+        {
+            var gymEntity = _repositoryManager.Gym.GetGym(gymId, trackChanges);
+            if (gymEntity is null)
+            {
+                throw new GymNotFoundException(gymId);
+            }
+
+            _mapper.Map(gymForUpdate, gymEntity);
+            _repositoryManager.Save();
+
+        }
     }
 }

@@ -15,5 +15,6 @@ namespace Service.Contracts
         IEnumerable<GymDto> GetByIds(IEnumerable<Guid> ids, bool trackChanges);
         (IEnumerable<GymDto> gyms, string ids) CreateGymCollection(IEnumerable<GymForCreationDto> gymCollection);
         void DeleteGym(Guid gymId, bool trackChanges);
+        void UpdateGym(Guid gymId, GymForUpdateDto gymForUpdate, bool trackChanges);
     }
 }
