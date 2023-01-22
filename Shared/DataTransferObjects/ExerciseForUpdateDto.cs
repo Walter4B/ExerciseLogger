@@ -6,8 +6,5 @@ using System.Threading.Tasks;
 
 namespace Shared.DataTransferObjects
 {
-    public record ExerciseForUpdateDto(string Type, DateTime StartTime, DateTime EndTime, TimeSpan Duration, string Comments)
-    {
-
-    }
+    public record ExerciseForUpdateDto(string Type, DateTime StartTime, DateTime EndTime, TimeSpan Duration, string Comments);
 }

@@ -76,7 +76,6 @@ namespace ExerciseLogger.Presentation.Controllers
             }
 
             var result = _service.ExerciseService.GetExerciseForPatch(gymId, id, gymTrackChanges: false, exerTrackChanges: true);
-
             patchDoc.ApplyTo(result.exerciseToPatch);
 
             _service.ExerciseService.SaveChangesForPatch(result.exerciseToPatch, result.exerciseEntity);
