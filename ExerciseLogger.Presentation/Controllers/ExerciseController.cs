@@ -41,6 +41,10 @@ namespace ExerciseLogger.Presentation.Controllers
             {
                 return BadRequest("ExerciseForCreationDto object is null");
             }
+            if (!ModelState.IsValid) 
+            {
+                return UnprocessableEntity(ModelState);
+            }
 
             var exerciseToReturn = _service.ExerciseService.CreateExerciseForGym(gymId, exercise, trackingChanges: false);
 

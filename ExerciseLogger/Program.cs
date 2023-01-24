@@ -30,7 +30,8 @@ builder.Services.AddControllers(config =>
     config.InputFormatters.Insert(0, GetJsonPatchInputFormatter());
 }).AddXmlDataContractSerializerFormatters()
        .AddCutomCSVFormatter()
-       .AddApplicationPart(typeof(ExerciseLogger.Presentation.AssemblyReference).Assembly);
+       .AddApplicationPart(typeof(ExerciseLogger.Presentation.AssemblyReference).Assembly)
+       .AddNewtonsoftJson();
 
 var app = builder.Build();
 
