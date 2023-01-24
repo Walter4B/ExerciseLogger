@@ -2,9 +2,8 @@ using ExerciseLogger.Extensions;
 using Contracts;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
-using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.Extensions.Options;
 using NLog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,8 +30,7 @@ builder.Services.AddControllers(config =>
     config.InputFormatters.Insert(0, GetJsonPatchInputFormatter());
 }).AddXmlDataContractSerializerFormatters()
        .AddCutomCSVFormatter()
-       .AddApplicationPart(typeof(ExerciseLogger.Presentation.AssemblyReference).Assembly)
-       .AddNewtonsoftJson();
+       .AddApplicationPart(typeof(ExerciseLogger.Presentation.AssemblyReference).Assembly);
 
 var app = builder.Build();
 
