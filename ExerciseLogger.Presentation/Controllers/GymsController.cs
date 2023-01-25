@@ -82,6 +82,10 @@ namespace ExerciseLogger.Presentation.Controllers
             { 
                 return BadRequest("GymForUpdateDto is null");
             }
+            if (!ModelState.IsValid)
+            {
+                UnprocessableEntity(ModelState);
+            }
 
             _service.GymService.UpdateGym(id, gym, trackChanges: true);
 

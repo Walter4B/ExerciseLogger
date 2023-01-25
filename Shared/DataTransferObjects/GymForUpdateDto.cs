@@ -6,5 +6,8 @@ using System.Threading.Tasks;
 
 namespace Shared.DataTransferObjects
 {
-    public record GymForUpdateDto(string Name, string Address, IEnumerable<ExerciseForCreationDto> Exercises);
+    public record GymForUpdateDto : GymForManipulationDto
+    {
+        public IEnumerable<ExerciseForCreationDto>? Exercises { get; set; }
+    }
 }

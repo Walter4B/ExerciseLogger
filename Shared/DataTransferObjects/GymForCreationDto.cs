@@ -8,14 +8,8 @@ using System.Threading.Tasks;
 
 namespace Shared.DataTransferObjects
 {
-    public record GymForCreationDto
+    public record GymForCreationDto : GymForManipulationDto
     {
-        [Required(ErrorMessage = "Gym name is required.")]
-        [MaxLength(40, ErrorMessage = "Maximum lenght for the name is 40 characters.")]
-        public string? Name { get; init; }
-
-        [Required(ErrorMessage = "Address is required.")]
-        [MaxLength(50, ErrorMessage = "Maximum lenght for the address is 50 characters")]
-        public string? Address { get; init; }
-    };
+        public IEnumerable<ExerciseForCreationDto>? Exercises { get; set; }
+    }
 }
