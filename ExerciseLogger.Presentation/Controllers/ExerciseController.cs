@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
@@ -84,7 +85,14 @@ namespace ExerciseLogger.Presentation.Controllers
             }
 
             var result = _service.ExerciseService.GetExerciseForPatch(gymId, id, gymTrackChanges: false, exerTrackChanges: true);
-            patchDoc.ApplyTo(result.exerciseToPatch);
+            patchDoc.ApplyTo(result.exerciseToPatch, ModelState);
+
+            TryValidateModel(result.exerciseToPatch);
+
+            if(!ModelState.IsValid)
+            {
+                return UnprocessableEntity(ModelState);
+            }
 
             _service.ExerciseService.SaveChangesForPatch(result.exerciseToPatch, result.exerciseEntity);
 
