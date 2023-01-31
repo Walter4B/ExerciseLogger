@@ -26,10 +26,10 @@ namespace Service
 
         }
 
-        public IEnumerable<GymDto> GetAllGyms(bool trackChanges)
+        public async Task<IEnumerable<GymDto>> GetAllGymsAsync(bool trackChanges)
         {
 
-            var gyms = _repositoryManager.Gym.GetAllGyms(trackChanges);
+            var gyms = await _repositoryManager.Gym.GetAllGymsAsync(trackChanges);
 
             var gymDtos = _mapper.Map<IEnumerable<GymDto>>(gyms);
 
@@ -37,9 +37,9 @@ namespace Service
 
         }
 
-        public GymDto GetGym(Guid id, bool trackingChanges)
+        public async Task<GymDto> GetGymAsync(Guid id, bool trackingChanges)
         {
-            var gym = _repositoryManager.Gym.GetGym(id, trackingChanges);
+            var gym = await _repositoryManager.Gym.GetGymAsync(id, trackingChanges);
             if (gym is null)
                 throw new GymNotFoundException(id);
 
@@ -48,26 +48,26 @@ namespace Service
             return gymDto;
         }
 
-        public GymDto CreateGym(GymForCreationDto gym)
+        public async Task<GymDto> CreateGymAsync(GymForCreationDto gym)
         { 
             var gymEntity = _mapper.Map<Gym> (gym);
 
             _repositoryManager.Gym.CreateGym(gymEntity);
-            _repositoryManager.Save();
+            await _repositoryManager.SaveAsync();
 
             var gymToReturn = _mapper.Map<GymDto>(gymEntity);
 
             return gymToReturn;
         }
 
-        public IEnumerable<GymDto> GetByIds(IEnumerable<Guid> ids, bool trackChanges)
+        public async Task<IEnumerable<GymDto>> GetByIdsAsync(IEnumerable<Guid> ids, bool trackChanges)
         {
             if (ids is null)
             {
                 throw new IdParametersBadRequestException();
             }
 
-            var gymEntities = _repositoryManager.Gym.GetByIds(ids, trackChanges);
+            var gymEntities = await _repositoryManager.Gym.GetByIdsAsync(ids, trackChanges);
             if (ids.Count() != gymEntities.Count())
             {
                 throw new CollectionByIdsBadRequestException();
@@ -78,7 +78,7 @@ namespace Service
             return gymsToReturn;
         }
 
-        public (IEnumerable<GymDto> gyms, string ids) CreateGymCollection(IEnumerable<GymForCreationDto> gymCollection)
+        public async Task<(IEnumerable<GymDto> gyms, string ids)> CreateGymCollectionAsync(IEnumerable<GymForCreationDto> gymCollection)
         {
             if (gymCollection is null)
             {
@@ -92,7 +92,7 @@ namespace Service
                 _repositoryManager.Gym.CreateGym(gym);
             }
 
-            _repositoryManager.Save();
+            await _repositoryManager.SaveAsync();
 
             var gymCollectionToReturn = _mapper.Map<IEnumerable<GymDto>>(gymEntities);
             var ids = string.Join(",", gymCollectionToReturn.Select(g => g.Id));
@@ -100,28 +100,28 @@ namespace Service
             return (gyms: gymCollectionToReturn, ids: ids);
         }
 
-        public void DeleteGym(Guid gymId, bool trackChanges) 
+        public async Task DeleteGymAsync(Guid gymId, bool trackChanges) 
         {
-            var gym = _repositoryManager.Gym.GetGym(gymId, trackChanges);
+            var gym = await _repositoryManager.Gym.GetGymAsync(gymId, trackChanges);
             if(gym is null)
             {
                 throw new GymNotFoundException(gymId);
             }
 
             _repositoryManager.Gym.DeleteGym(gym);
-            _repositoryManager.Save();
+            await _repositoryManager.SaveAsync();
         }
 
-        public void UpdateGym(Guid gymId, GymForUpdateDto gymForUpdate, bool trackChanges)
+        public async Task UpdateGymAsync(Guid gymId, GymForUpdateDto gymForUpdate, bool trackChanges)
         {
-            var gymEntity = _repositoryManager.Gym.GetGym(gymId, trackChanges);
+            var gymEntity = await _repositoryManager.Gym.GetGymAsync(gymId, trackChanges);
             if (gymEntity is null)
             {
                 throw new GymNotFoundException(gymId);
             }
 
             _mapper.Map(gymForUpdate, gymEntity);
-            _repositoryManager.Save();
+            await _repositoryManager.SaveAsync();
 
         }
     }

@@ -5,12 +5,12 @@ namespace Service.Contracts
 {
     public interface IExerciseService
     {
-        IEnumerable<ExerciseDto> GetExercises(Guid gymid, bool trackChanges);
-        ExerciseDto GetExercise(Guid gymId, Guid id, bool trackChanges);
-        ExerciseDto CreateExerciseForGym(Guid gymId, ExerciseForCreationDto exerciseForCreationDto, bool trackingChanges);
-        void DeleteExerciseForGym(Guid gymId, Guid id, bool trackChanges);
-        void UpdateExerciseForGym(Guid gymId, Guid id, ExerciseForUpdateDto exerciseForUpdate, bool gymTrackChanges, bool exerTrackChanges);
-        (ExerciseForUpdateDto exerciseToPatch, Exercise exerciseEntity) GetExerciseForPatch(Guid gymId, Guid id, bool gymTrackChanges, bool exerTrackChanges);
-        void SaveChangesForPatch(ExerciseForUpdateDto exerciseToPatch, Exercise exerciseEntity);
+        Task<IEnumerable<ExerciseDto>> GetExercisesAsync(Guid gymid, bool trackChanges);
+        Task<ExerciseDto> GetExerciseAsync(Guid gymId, Guid id, bool trackChanges);
+        Task<ExerciseDto> CreateExerciseForGymAsync(Guid gymId, ExerciseForCreationDto exerciseForCreationDto, bool trackingChanges);
+        Task DeleteExerciseForGymAsync(Guid gymId, Guid id, bool trackChanges);
+        Task UpdateExerciseForGymAsync(Guid gymId, Guid id, ExerciseForUpdateDto exerciseForUpdate, bool gymTrackChanges, bool exerTrackChanges);
+        Task<(ExerciseForUpdateDto exerciseToPatch, Exercise exerciseEntity)> GetExerciseForPatchAsync(Guid gymId, Guid id, bool gymTrackChanges, bool exerTrackChanges);
+        Task SaveChangesForPatchAsync(ExerciseForUpdateDto exerciseToPatch, Exercise exerciseEntity);
     }
 }

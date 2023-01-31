@@ -9,6 +9,7 @@ using AutoMapper;
 using Shared.DataTransferObjects;
 using Entities.Exceptions;
 using Entities.Models;
+using System.Runtime.CompilerServices;
 
 namespace Service
 {
@@ -25,13 +26,13 @@ namespace Service
             _mapper = mapper;
         }
 
-        public IEnumerable<ExerciseDto> GetExercises(Guid gymId, bool trackChanges)
+        public async Task<IEnumerable<ExerciseDto>> GetExercisesAsync(Guid gymId, bool trackChanges)
         {
-            var gym = _repository.Gym.GetGym(gymId, trackChanges);
+            var gym = await _repository.Gym.GetGymAsync(gymId, trackChanges);
             if (gym is null)
                 throw new GymNotFoundException(gymId);
 
-            var exercisesFromDb = _repository.Exercise.GetExercises(gymId, trackChanges);
+            var exercisesFromDb = await _repository.Exercise.GetExercisesAsync(gymId, trackChanges);
 
             var exercisesDto = _mapper.Map<IEnumerable<ExerciseDto>>(exercisesFromDb);
 
@@ -39,13 +40,13 @@ namespace Service
 
         }
 
-        public ExerciseDto GetExercise(Guid gymId, Guid id, bool trackChanges)
+        public async Task<ExerciseDto> GetExerciseAsync(Guid gymId, Guid id, bool trackChanges)
         {
-            var gym = _repository.Gym.GetGym(gymId, trackChanges);
+            var gym = await _repository.Gym.GetGymAsync(gymId, trackChanges);
             if (gym is null)
                 throw new GymNotFoundException(gymId);
 
-            var exerciseDb = _repository.Exercise.GetExercise(gymId, id, trackChanges);
+            var exerciseDb = await _repository.Exercise.GetExerciseAsync(gymId, id, trackChanges);
             if (exerciseDb is null)
                 throw new ExerciseNotFoundException(id);
 
@@ -53,9 +54,9 @@ namespace Service
             return exercise;
         }
 
-        public ExerciseDto CreateExerciseForGym(Guid gymId, ExerciseForCreationDto exerciseForCreation, bool trackingChanges)
+        public async Task<ExerciseDto> CreateExerciseForGymAsync(Guid gymId, ExerciseForCreationDto exerciseForCreation, bool trackingChanges)
         {
-            var gym = _repository.Gym.GetGym(gymId, trackingChanges);
+            var gym = await _repository.Gym.GetGymAsync(gymId, trackingChanges);
 
             if (gym is null)
             {
@@ -65,23 +66,23 @@ namespace Service
             var exerciseEntity = _mapper.Map<Exercise>(exerciseForCreation);
 
             _repository.Exercise.CreateExerciseForGym(gymId, exerciseEntity);
-            _repository.Save();
+            await _repository.SaveAsync();
 
             var exerciseToReturn = _mapper.Map<ExerciseDto>(exerciseEntity);
 
             return exerciseToReturn;
         }
 
-        public void DeleteExerciseForGym(Guid gymId, Guid id, bool trackChanges) 
+        public async Task DeleteExerciseForGymAsync(Guid gymId, Guid id, bool trackChanges) 
         {
-            var gym = _repository.Gym.GetGym(gymId, trackChanges);
+            var gym = await _repository.Gym.GetGymAsync(gymId, trackChanges);
 
             if(gym is null)
             {
                 throw new GymNotFoundException(gymId);
             }
 
-            var exerciseEntity = _repository.Exercise.GetExercise(gymId, id, trackChanges);
+            var exerciseEntity = await _repository.Exercise.GetExerciseAsync(gymId, id, trackChanges);
 
             if (exerciseEntity is null)
             {
@@ -89,37 +90,37 @@ namespace Service
             }
 
             _repository.Exercise.DeleteExercise(exerciseEntity);
-            _repository.Save();
+            await _repository.SaveAsync();
         }
 
-        public void UpdateExerciseForGym(Guid gymId, Guid id, ExerciseForUpdateDto exerciseForUpdate, bool gymTrackChanges, bool exerTrackChanges)
+        public async Task UpdateExerciseForGymAsync(Guid gymId, Guid id, ExerciseForUpdateDto exerciseForUpdate, bool gymTrackChanges, bool exerTrackChanges)
         {
-            var gym = _repository.Gym.GetGym(gymId, gymTrackChanges);
+            var gym = await _repository.Gym.GetGymAsync(gymId, gymTrackChanges);
             if(gym is null) 
             {
                 throw new GymNotFoundException(gymId);
             }
 
-            var exerciseEntity = _repository.Exercise.GetExercise(gymId, id, exerTrackChanges);
+            var exerciseEntity = await _repository.Exercise.GetExerciseAsync(gymId, id, exerTrackChanges);
             if(exerciseEntity is null)
             {
                 throw new ExerciseNotFoundException(id);
             }
 
             _mapper.Map(exerciseForUpdate, exerciseEntity);
-            _repository.Save();
+            await _repository.SaveAsync();
 
         }
 
-        public (ExerciseForUpdateDto exerciseToPatch, Exercise exerciseEntity) GetExerciseForPatch(Guid gymId, Guid id, bool gymTrackChanges, bool exerTrachChanges)
+        public async Task<(ExerciseForUpdateDto exerciseToPatch, Exercise exerciseEntity)> GetExerciseForPatchAsync(Guid gymId, Guid id, bool gymTrackChanges, bool exerTrachChanges)
         {
-            var gym = _repository.Gym.GetGym(gymId, gymTrackChanges);
+            var gym = await _repository.Gym.GetGymAsync(gymId, gymTrackChanges);
             if(gym is null)
             {
                 throw new GymNotFoundException(gymId);
             }
 
-            var exerciseEntity = _repository.Exercise.GetExercise(gymId, id, exerTrachChanges);
+            var exerciseEntity = await _repository.Exercise.GetExerciseAsync(gymId, id, exerTrachChanges);
             if(exerciseEntity is null)
             {
                 throw new ExerciseNotFoundException(id);
@@ -130,10 +131,10 @@ namespace Service
             return (exerciseToPatch, exerciseEntity);
         }
 
-        public void SaveChangesForPatch(ExerciseForUpdateDto exerciseToPatch, Exercise exerciseEntity)
+        public async Task SaveChangesForPatchAsync(ExerciseForUpdateDto exerciseToPatch, Exercise exerciseEntity)
         {
             _mapper.Map(exerciseToPatch, exerciseEntity);
-            _repository.Save();
+            await _repository.SaveAsync();
         }
     }
 }

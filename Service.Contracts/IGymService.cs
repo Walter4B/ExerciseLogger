@@ -9,12 +9,12 @@ namespace Service.Contracts
 {
     public interface IGymService
     {
-        IEnumerable<GymDto> GetAllGyms(bool trackChanges);
-        GymDto GetGym(Guid gymId, bool trackChanges);
-        GymDto CreateGym(GymForCreationDto gym);
-        IEnumerable<GymDto> GetByIds(IEnumerable<Guid> ids, bool trackChanges);
-        (IEnumerable<GymDto> gyms, string ids) CreateGymCollection(IEnumerable<GymForCreationDto> gymCollection);
-        void DeleteGym(Guid gymId, bool trackChanges);
-        void UpdateGym(Guid gymId, GymForUpdateDto gymForUpdate, bool trackChanges);
+        Task<IEnumerable<GymDto>> GetAllGymsAsync(bool trackChanges);
+        Task<GymDto> GetGymAsync(Guid gymId, bool trackChanges);
+        Task<GymDto> CreateGymAsync(GymForCreationDto gym);
+        Task<IEnumerable<GymDto>> GetByIdsAsync(IEnumerable<Guid> ids, bool trackChanges);
+        Task<(IEnumerable<GymDto> gyms, string ids)> CreateGymCollectionAsync(IEnumerable<GymForCreationDto> gymCollection);
+        Task DeleteGymAsync(Guid gymId, bool trackChanges);
+        Task UpdateGymAsync(Guid gymId, GymForUpdateDto gymForUpdate, bool trackChanges);
     }
 }

@@ -23,6 +23,6 @@ namespace Repository
         public IGymRepository Gym => _gymRepository.Value;
         public IExerciseRepository Exercise => _exerciseRepository.Value;
 
-        public void Save() => _repositoryContext.SaveChanges();
+        public async Task SaveAsync() => await _repositoryContext.SaveChangesAsync();
     }
 }

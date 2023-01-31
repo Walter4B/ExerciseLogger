@@ -11,6 +11,6 @@ namespace Contracts
         IGymRepository Gym { get; }
         IExerciseRepository Exercise { get; }
 
-        void Save();
+        Task SaveAsync();
     }
 }

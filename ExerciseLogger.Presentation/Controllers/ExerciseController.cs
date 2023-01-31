@@ -20,23 +20,23 @@ namespace ExerciseLogger.Presentation.Controllers
         public ExerciseController (IServiceManager service) => _service = service;
 
         [HttpGet]
-        public IActionResult GetExercisesForGym(Guid gymId)
+        public async Task<IActionResult> GetExercisesForGym(Guid gymId)
         {
-            var exercise = _service.ExerciseService.GetExercises(gymId, trackChanges: false);
+            var exercise = await _service.ExerciseService.GetExercisesAsync(gymId, trackChanges: false);
             return Ok(exercise);
 
         }
 
         [HttpGet("{id:guid}", Name = "GetExerciseForGym")]
-        public IActionResult GetExerciseForGym(Guid gymId, Guid id)
+        public async Task<IActionResult> GetExerciseForGym(Guid gymId, Guid id)
         {
-            var exercises = _service.ExerciseService.GetExercise(gymId, id, trackChanges: false);
+            var exercises = await _service.ExerciseService.GetExerciseAsync(gymId, id, trackChanges: false);
 
             return Ok(exercises);
         }
 
         [HttpPost]
-        public IActionResult CreateExerciseForGym(Guid gymId, [FromBody] ExerciseForCreationDto exercise)
+        public async Task<IActionResult> CreateExerciseForGym(Guid gymId, [FromBody] ExerciseForCreationDto exercise)
         {
             if (exercise is null)
             {
@@ -47,21 +47,21 @@ namespace ExerciseLogger.Presentation.Controllers
                 return UnprocessableEntity(ModelState);
             }
 
-            var exerciseToReturn = _service.ExerciseService.CreateExerciseForGym(gymId, exercise, trackingChanges: false);
+            var exerciseToReturn = await _service.ExerciseService.CreateExerciseForGymAsync(gymId, exercise, trackingChanges: false);
 
             return CreatedAtRoute("GetExerciseForGym", new { gymId, id = exerciseToReturn.Id }, exerciseToReturn);
         }
 
         [HttpDelete("{id:guid}")]
-        public IActionResult DeleteExerciseForGym(Guid gymId, Guid id)
+        public async Task<IActionResult> DeleteExerciseForGym(Guid gymId, Guid id)
         {
-            _service.ExerciseService.DeleteExerciseForGym(gymId, id, trackChanges: false);
+            await _service.ExerciseService.DeleteExerciseForGymAsync(gymId, id, trackChanges: false);
 
             return NoContent();
         }
 
         [HttpPut("{id:guid}")]
-        public IActionResult UpdateExerciseForGym(Guid gymId, Guid id, [FromBody] ExerciseForUpdateDto exercise)
+        public async Task<IActionResult> UpdateExerciseForGym(Guid gymId, Guid id, [FromBody] ExerciseForUpdateDto exercise)
         { 
             if(exercise is null)
             {
@@ -72,19 +72,19 @@ namespace ExerciseLogger.Presentation.Controllers
                 return UnprocessableEntity(ModelState);
             }
 
-            _service.ExerciseService.UpdateExerciseForGym(gymId, id, exercise, gymTrackChanges: false, exerTrackChanges: true);
+            await _service.ExerciseService.UpdateExerciseForGymAsync(gymId, id, exercise, gymTrackChanges: false, exerTrackChanges: true);
             return NoContent();
         }
 
         [HttpPatch("{id:guid}")]
-        public IActionResult PartiallyUpdateExerciseForGym(Guid gymId, Guid id, [FromBody] JsonPatchDocument<ExerciseForUpdateDto> patchDoc)
+        public async Task<IActionResult> PartiallyUpdateExerciseForGym(Guid gymId, Guid id, [FromBody] JsonPatchDocument<ExerciseForUpdateDto> patchDoc)
         {
             if (patchDoc is null)
             {
                 return BadRequest("patchDoc object is null.");
             }
 
-            var result = _service.ExerciseService.GetExerciseForPatch(gymId, id, gymTrackChanges: false, exerTrackChanges: true);
+            var result = await _service.ExerciseService.GetExerciseForPatchAsync(gymId, id, gymTrackChanges: false, exerTrackChanges: true);
             patchDoc.ApplyTo(result.exerciseToPatch, ModelState);
 
             TryValidateModel(result.exerciseToPatch);
@@ -94,7 +94,7 @@ namespace ExerciseLogger.Presentation.Controllers
                 return UnprocessableEntity(ModelState);
             }
 
-            _service.ExerciseService.SaveChangesForPatch(result.exerciseToPatch, result.exerciseEntity);
+            await _service.ExerciseService.SaveChangesForPatchAsync(result.exerciseToPatch, result.exerciseEntity);
 
             return NoContent();
         }

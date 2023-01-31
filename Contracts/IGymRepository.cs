@@ -9,10 +9,10 @@ namespace Contracts
 {
     public interface IGymRepository
     {
-        IEnumerable<Gym> GetAllGyms(bool trackChanges);
-        Gym GetGym(Guid gymId, bool trackChanges);
+        Task<IEnumerable<Gym>> GetAllGymsAsync(bool trackChanges);
+        Task<Gym> GetGymAsync(Guid gymId, bool trackChanges);
         void CreateGym(Gym gym);
-        IEnumerable<Gym> GetByIds(IEnumerable<Guid> ids, bool trackChanges);
+        Task<IEnumerable<Gym>> GetByIdsAsync(IEnumerable<Guid> ids, bool trackChanges);
         void DeleteGym(Gym gym);
     }
 }

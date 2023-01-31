@@ -19,31 +19,31 @@ namespace ExerciseLogger.Presentation.Controllers
         public GymsController(IServiceManager service) => _service = service;
 
         [HttpGet]
-        public IActionResult GetGyms()
+        public async Task<IActionResult> GetGyms()
         {
-            var gyms = _service.GymService.GetAllGyms(trackChanges: false);
+            var gyms = await _service.GymService.GetAllGymsAsync(trackChanges: false);
 
             return Ok(gyms);
         }
 
         [HttpGet("{Id:Guid}", Name = "GymById")]
-        public IActionResult GetGym(Guid id)
+        public async Task<IActionResult> GetGym(Guid id)
         {
-            var gym = _service.GymService.GetGym(id, trackChanges: false);
+            var gym = await _service.GymService.GetGymAsync(id, trackChanges: false);
 
             return Ok(gym);
         }
 
         [HttpGet("collection/({ids})", Name = "GymCollection")]
-        public IActionResult GetGymCollection([ModelBinder (BinderType = typeof(ArrayModelBinder))]IEnumerable<Guid> ids)
+        public async Task<IActionResult> GetGymCollection([ModelBinder (BinderType = typeof(ArrayModelBinder))]IEnumerable<Guid> ids)
         {
-            var gyms = _service.GymService.GetByIds(ids, trackChanges: false);
-
+            var gyms = await _service.GymService.GetByIdsAsync(ids, trackChanges: false);
+            
             return Ok(gyms);
         }
 
         [HttpPost]
-        public IActionResult CreateGym([FromBody] GymForCreationDto gym)
+        public async Task<IActionResult> CreateGym([FromBody] GymForCreationDto gym)
         {
             if (gym is null)
             {
@@ -54,29 +54,29 @@ namespace ExerciseLogger.Presentation.Controllers
                 return UnprocessableEntity(ModelState);
             }
 
-            var createdGym = _service.GymService.CreateGym(gym);
+            var createdGym = await _service.GymService.CreateGymAsync(gym);
 
             return CreatedAtRoute("GymById", new { id = createdGym.Id }, createdGym);
         }
 
         [HttpPost("collection")]
-        public IActionResult CreateGymCollection([FromBody] IEnumerable<GymForCreationDto> gymCollection)
+        public async Task<IActionResult> CreateGymCollection([FromBody] IEnumerable<GymForCreationDto> gymCollection)
         { 
-            var result = _service.GymService.CreateGymCollection(gymCollection);
+            var result = await _service.GymService.CreateGymCollectionAsync(gymCollection);
 
             return CreatedAtRoute("GymCollection", new { result.ids }, result.gyms);
         }
 
         [HttpDelete("{id:guid}")]
-        public IActionResult DeleteGym(Guid id)
+        public async Task<IActionResult> DeleteGym(Guid id)
         {
-            _service.GymService.DeleteGym(id, trackChanges: false);
+            await _service.GymService.DeleteGymAsync(id, trackChanges: false);
 
             return NoContent();
         }
 
         [HttpPut("{id:guid}")]
-        public IActionResult UpdateGym(Guid id, [FromBody] GymForUpdateDto gym)
+        public async Task<IActionResult> UpdateGym(Guid id, [FromBody] GymForUpdateDto gym)
         {
             if(gym is null)
             { 
@@ -87,7 +87,7 @@ namespace ExerciseLogger.Presentation.Controllers
                 UnprocessableEntity(ModelState);
             }
 
-            _service.GymService.UpdateGym(id, gym, trackChanges: true);
+            await _service.GymService.UpdateGymAsync(id, gym, trackChanges: true);
 
             return NoContent();
         }
